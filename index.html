@@ -171,9 +171,11 @@
       font-size: 18px;
       color: #555;
       line-height: 1.8;
+      text-align: center;
+      white-space: normal;
       min-height: 160px;
-      white-space: pre-line;
     }
+
     .signature {
       opacity: 0;
       font-family: 'Great Vibes', cursive;
@@ -225,7 +227,7 @@
 
   <div class="envelope" id="envelope">
     <div class="card">
-      <h2>Gửi tặng phái đẹp</h2>
+      <h2>Thân gửi một nửa thế giới 💕</h2>
       <p>Nhấn để mở thư 💌</p>
       <div class="heart"></div>
     </div>
@@ -241,10 +243,6 @@
   </div>
 
   <footer>— 20 Tháng 10 · Gửi yêu thương đến tất cả phụ nữ Việt Nam —</footer>
-
-  <audio id="bgMusic" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/18/audio_15742a34d8.mp3?filename=soft-piano-ambient-121895.mp3" type="audio/mpeg">
-  </audio>
 
   <script>
     // Tim bay nền
@@ -272,28 +270,31 @@
 
     // Lời chúc ngẫu nhiên
     const wishes = [
-      "Chúc bạn luôn rực rỡ như đóa hoa hồng buổi sớm 🌹\nLuôn yêu đời, tự tin và tràn đầy năng lượng tích cực nhé!",
-      "Mong bạn luôn hạnh phúc, được yêu thương và bình an 💖\nHãy nhớ rằng bạn là điều tuyệt vời nhất trong mắt thế giới!",
-      "Chúc bạn luôn tỏa sáng như ánh nắng mùa xuân ☀️\nMỗi ngày đều là một món quà đẹp của cuộc sống.",
-      "Hãy mỉm cười thật tươi vì bạn xứng đáng được hạnh phúc 🌸\nChúc ngày 20/10 tràn ngập yêu thương!"
+      "Chúc cậu luôn rực rỡ như đóa hoa hồng buổi sớm 🌹\nLuôn yêu đời, tự tin và tràn đầy năng lượng tích cực nhé!",
+      "Mong cậu luôn hạnh phúc, được yêu thương và bình an 💖\nHãy nhớ rằng cậu là điều tuyệt vời nhất trong mắt tớ!\nĐặc biệt là chúc cậu xinh hơn đứa mình ghét \nvà nét hơn đứa ghét mình.",
     ];
 
     const envelope = document.getElementById("envelope");
     const popup = document.getElementById("popup");
     const closeBtn = document.getElementById("closeBtn");
     const typedText = document.getElementById("typedText");
-    const bgMusic = document.getElementById("bgMusic");
     const signature = document.getElementById("signature");
 
-    function typeText(text, element, delay=50, callback){
+    // Hiệu ứng gõ chữ có xử lý xuống dòng
+    function typeText(text, element, delay = 50, callback) {
       let i = 0;
       element.innerHTML = "";
-      function typing(){
-        if(i < text.length){
-          element.innerHTML += text.charAt(i);
+      function typing() {
+        if (i < text.length) {
+          const char = text.charAt(i);
+          if (char === "\n") {
+            element.innerHTML += "<br>";
+          } else {
+            element.innerHTML += char;
+          }
           i++;
           setTimeout(typing, delay);
-        } else if(callback) callback();
+        } else if (callback) callback();
       }
       typing();
     }
@@ -302,10 +303,9 @@
       const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
       popup.style.display = "flex";
       signature.style.opacity = 0;
-      typeText(randomWish, typedText, 50, ()=>{
+      typeText(randomWish, typedText, 45, ()=>{
         signature.style.opacity = 1;
       });
-      bgMusic.play();
       confetti({
         particleCount: 150,
         spread: 120,
@@ -316,7 +316,6 @@
 
     closeBtn.addEventListener("click", ()=>{
       popup.style.display = "none";
-      bgMusic.pause();
     });
   </script>
 </body>
