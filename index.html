@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💖 Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 💐</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      overflow: hidden;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      background-size: 200% 200%;
+      animation: gradientMove 10s ease infinite;
+      font-family: 'Quicksand', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    @keyframes gradientMove {
+      0%,100% { background-position: left top; }
+      50% { background-position: right bottom; }
+    }
+
+    canvas#hearts {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+    }
+
+    .floating-text {
+      position: absolute;
+      top: 10%;
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      color: #fff;
+      text-shadow: 0 0 20px #ffb6c1, 0 0 40px #ff69b4;
+      font-size: 60px;
+      animation: fadeInUp 2s ease-in-out;
+      z-index: 2;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .envelope {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      background: #f4978e;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+      z-index: 2;
+    }
+    .envelope:hover { transform: scale(1.05); }
+
+    .envelope::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 220px;
+      height: 220px;
+      background: #f08080;
+      border-radius: 30px 0 0 0;
+    }
+
+    .card {
+      position: absolute;
+      width: 280px;
+      height: 180px;
+      top: 15px;
+      left: 20px;
+      background: #fffafc;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+      transition: transform 0.8s ease;
+    }
+
+    .card h2 {
+      margin-top: 30px;
+      color: #e85d75;
+      font-family: 'Great Vibes', cursive;
+      font-size: 36px;
+      text-shadow: 0 0 10px rgba(255,170,200,0.8);
+    }
+
+    .card p {
+      font-size: 16px;
+      color: #444;
+      padding: 0 15px;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .heart {
+      width: 40px;
+      height: 40px;
+      background: #e85d75;
+      position: absolute;
+      bottom: -20px;
+      left: calc(50% - 20px);
+      transform: rotate(-45deg);
+      animation: pulse 1.5s infinite;
+    }
+    .heart:before,
+    .heart:after {
+      content: "";
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: #e85d75;
+      border-radius: 50%;
+    }
+    .heart:before { top: -20px; left: 0; }
+    .heart:after { left: 20px; top: 0; }
+    @keyframes pulse {
+      0% { transform: scale(1) rotate(-45deg); }
+      50% { transform: scale(1.2) rotate(-45deg); }
+      100% { transform: scale(1) rotate(-45deg); }
+    }
+
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.6);
+      z-index: 10;
+      animation: fadeIn 0.6s;
+    }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+    .popup-content {
+      position: relative;
+      width: 600px;
+      background: #fffafc;
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255,182,193,0.8);
+      animation: showUp 0.8s ease;
+    }
+    @keyframes showUp {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .popup-content h3 {
+      font-family: 'Great Vibes', cursive;
+      color: #e85d75;
+      font-size: 42px;
+      margin-bottom: 20px;
+    }
+    .popup-content p {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.8;
+      min-height: 160px;
+      white-space: pre-line;
+    }
+    .signature {
+      opacity: 0;
+      font-family: 'Great Vibes', cursive;
+      font-size: 28px;
+      color: #e85d75;
+      margin-top: 25px;
+      text-shadow: 0 0 8px rgba(255,182,193,0.7);
+      animation: fadeInSignature 2s ease forwards;
+    }
+    @keyframes fadeInSignature {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      background: none;
+      border: none;
+      font-size: 25px;
+      color: #e85d75;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .close-btn:hover { transform: scale(1.2); }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      text-shadow: 0 0 5px rgba(255,255,255,0.8);
+    }
+
+    @media (max-width: 600px) {
+      .popup-content { width: 90%; padding: 25px; }
+      .popup-content h3 { font-size: 30px; }
+      .floating-text { font-size: 40px; }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="hearts"></canvas>
+
+  <div class="floating-text">🌸 Happy Women's Day 20/10 🌸</div>
+
+  <div class="envelope" id="envelope">
+    <div class="card">
+      <h2>Gửi tặng phái đẹp</h2>
+      <p>Nhấn để mở thư 💌</p>
+      <div class="heart"></div>
+    </div>
+  </div>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <button class="close-btn" id="closeBtn">&times;</button>
+      <h3>Gửi đến những bông hoa tuyệt vời nhất 💐</h3>
+      <p id="typedText"></p>
+      <div class="signature" id="signature">— From Tùng with love 💕 —</div>
+    </div>
+  </div>
+
+  <footer>— 20 Tháng 10 · Gửi yêu thương đến tất cả phụ nữ Việt Nam —</footer>
+
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/18/audio_15742a34d8.mp3?filename=soft-piano-ambient-121895.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Tim bay nền
+    const c = document.getElementById("hearts");
+    const ctx = c.getContext("2d");
+    c.width = window.innerWidth;
+    c.height = window.innerHeight;
+    const hearts = [];
+    for (let i = 0; i < 50; i++) {
+      hearts.push({x: Math.random()*c.width, y: Math.random()*c.height, size: Math.random()*2+1, speed: Math.random()*0.5+0.3});
+    }
+    function draw(){
+      ctx.clearRect(0,0,c.width,c.height);
+      hearts.forEach(h=>{
+        ctx.beginPath();
+        ctx.fillStyle="rgba(255,182,193,.7)";
+        ctx.arc(h.x,h.y,h.size,0,Math.PI*2);
+        ctx.fill();
+        h.y -= h.speed;
+        if(h.y < -5) h.y = c.height + 5;
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    // Lời chúc ngẫu nhiên
+    const wishes = [
+      "Chúc bạn luôn rực rỡ như đóa hoa hồng buổi sớm 🌹\nLuôn yêu đời, tự tin và tràn đầy năng lượng tích cực nhé!",
+      "Mong bạn luôn hạnh phúc, được yêu thương và bình an 💖\nHãy nhớ rằng bạn là điều tuyệt vời nhất trong mắt thế giới!",
+      "Chúc bạn luôn tỏa sáng như ánh nắng mùa xuân ☀️\nMỗi ngày đều là một món quà đẹp của cuộc sống.",
+      "Hãy mỉm cười thật tươi vì bạn xứng đáng được hạnh phúc 🌸\nChúc ngày 20/10 tràn ngập yêu thương!"
+    ];
+
+    const envelope = document.getElementById("envelope");
+    const popup = document.getElementById("popup");
+    const closeBtn = document.getElementById("closeBtn");
+    const typedText = document.getElementById("typedText");
+    const bgMusic = document.getElementById("bgMusic");
+    const signature = document.getElementById("signature");
+
+    function typeText(text, element, delay=50, callback){
+      let i = 0;
+      element.innerHTML = "";
+      function typing(){
+        if(i < text.length){
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typing, delay);
+        } else if(callback) callback();
+      }
+      typing();
+    }
+
+    envelope.addEventListener("click", ()=>{
+      const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+      popup.style.display = "flex";
+      signature.style.opacity = 0;
+      typeText(randomWish, typedText, 50, ()=>{
+        signature.style.opacity = 1;
+      });
+      bgMusic.play();
+      confetti({
+        particleCount: 150,
+        spread: 120,
+        origin: { y: 0.7 },
+        colors: ['#ffb6c1','#ff69b4','#ffc0cb','#fff']
+      });
+    });
+
+    closeBtn.addEventListener("click", ()=>{
+      popup.style.display = "none";
+      bgMusic.pause();
+    });
+  </script>
+</body>
+</html>
